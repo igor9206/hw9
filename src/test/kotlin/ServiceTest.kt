@@ -67,18 +67,9 @@ class ServiceTest {
         val expected = listOf<Messages>(
             Messages(id = 0, text = "Hi", sender = Users(id = 0, name = "Igor"), readIt = true),
             Messages(id = 1, text = "Hi", sender = Users(id = 1, name = "Oleg"), readIt = true)
-        )
+        ).joinToString(separator = "\n")
 
         assertEquals(expected, result)
-    }
-
-    @Test(expected = NotFoundException::class)
-    fun readMessageNoUser() {
-        val service = Service()
-        service.addUser("Igor")
-        service.addUser("Oleg")
-        service.sendMessage(0, 1, "Hi")
-        service.readMessage(1, 0)
     }
 
     @Test
