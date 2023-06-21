@@ -34,7 +34,7 @@ class Service {
             }
 
         } else {
-            throw PostNotFoundException("Пользователя не существует")
+            throw NotFoundException("Пользователя не существует")
         }
         return false
     }
@@ -58,7 +58,7 @@ class Service {
             }
             return listChats
         }
-        throw PostNotFoundException("Пользователя не существует")
+        throw NotFoundException("Пользователя не существует")
     }
 
     fun getLastMsgInChat(userId: Int): String {
@@ -72,7 +72,7 @@ class Service {
             }
             return listChats
         }
-        throw PostNotFoundException("Пользователя не существует")
+        throw NotFoundException("Пользователя не существует")
     }
 
     fun getListMsg(chatId: Int, lastMsgId: Int, amountMsg: Int): List<Messages> {
@@ -89,11 +89,11 @@ class Service {
     fun readMessage(chatId: Int, messageId: Int) {
         val indexChat = chats.indexOf(chats.find { it.id == chatId })
         if (indexChat == errorNotFound) {
-            throw PostNotFoundException("Чат отсутствует")
+            throw NotFoundException("Чат отсутствует")
         } else {
             val indexMsg = chats[indexChat].messages.indexOf(chats[indexChat].messages.find { it.id == messageId })
             if (indexMsg == errorNotFound) {
-                throw PostNotFoundException("Сообщение отсутствует")
+                throw NotFoundException("Сообщение отсутствует")
             } else {
                 chats[indexChat].messages[messageId].readIt = true
             }
@@ -103,11 +103,11 @@ class Service {
     fun delMessage(chatId: Int, messageId: Int): Boolean {
         val indexChat = chats.indexOf(chats.find { it.id == chatId })
         if (indexChat == errorNotFound) {
-            throw PostNotFoundException("Чат отсутствует")
+            throw NotFoundException("Чат отсутствует")
         } else {
             val indexMsg = chats[indexChat].messages.indexOf(chats[indexChat].messages.find { it.id == messageId })
             if (indexMsg < 0) {
-                throw PostNotFoundException("Сообщение отсутствует")
+                throw NotFoundException("Сообщение отсутствует")
             } else {
                 return chats[indexChat].messages.remove(chats[indexChat].messages[messageId])
             }
@@ -117,7 +117,7 @@ class Service {
     fun delChat(chatId: Int): Boolean {
         val indexChat = chats.indexOf(chats.find { it.id == chatId })
         if (indexChat < 0) {
-            throw PostNotFoundException("Чат отсутствует")
+            throw NotFoundException("Чат отсутствует")
         } else {
             return chats.remove(chats[chatId])
         }
