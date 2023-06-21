@@ -53,14 +53,17 @@ class Service {
             .map { it.messages.last() }
     }
 
-    fun getListMsg(chatId: Int, lastMsgId: Int, amountMsg: Int): List<Messages> {
+    fun getListMsg(chatId: Int, lastMsgId: Int, amountMsg: Int): String {
         val chat = checkChat(chatId)
         val firstMsg = chat.messages
             .firstOrNull { it.id == lastMsgId } ?: throw NotFoundException("No message with ID:$lastMsgId")
-        return chat.messages
-            .subList(chat.messages.indexOf(firstMsg), chat.messages.size)
+
+        return chat.messages.asSequence()
+            .drop(chat.messages.indexOf(firstMsg))
             .take(amountMsg)
+            .map { it }
             .onEach { it.readIt = true }
+            .joinToString(separator = "\n")
     }
 
     fun delMessage(chatId: Int, messageId: Int): Boolean {
