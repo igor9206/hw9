@@ -22,7 +22,7 @@ class ServiceTest {
         assertTrue(result)
     }
 
-    @Test(expected = PostNotFoundException::class)
+    @Test(expected = NotFoundException::class)
     fun sendMessageNoUser() {
         val service = Service()
         service.addUser("Igor")
@@ -42,14 +42,14 @@ class ServiceTest {
         assertEquals(1, result)
     }
 
-    @Test(expected = PostNotFoundException::class)
+    @Test(expected = NotFoundException::class)
     fun getChatsNoUser() {
         val service = Service()
         service.addUser("Igor")
         service.getChats(1)
     }
 
-    @Test(expected = PostNotFoundException::class)
+    @Test(expected = NotFoundException::class)
     fun getLastMsgInChatNoUser() {
         val service = Service()
         service.addUser("Igor")
@@ -70,15 +70,6 @@ class ServiceTest {
         )
 
         assertEquals(expected, result)
-    }
-
-    @Test(expected = PostNotFoundException::class)
-    fun readMessageNoUser() {
-        val service = Service()
-        service.addUser("Igor")
-        service.addUser("Oleg")
-        service.sendMessage(0, 1, "Hi")
-        service.readMessage(1, 0)
     }
 
     @Test

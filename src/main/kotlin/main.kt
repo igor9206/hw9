@@ -1,4 +1,4 @@
-class PostNotFoundException(message: String) : RuntimeException(message)
+class NotFoundException(message: String) : RuntimeException(message)
 
 data class Chats(
     val id: Int = -1,
